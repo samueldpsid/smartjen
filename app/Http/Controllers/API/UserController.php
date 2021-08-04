@@ -41,7 +41,7 @@ class UserController extends BaseController
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
-            'role_id' => ['required', 'numeric'],
+            'role' => ['required', 'string', 'max:15'],
             'school_id' => ['required', 'numeric'],
         ]);
 
@@ -53,7 +53,7 @@ class UserController extends BaseController
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role_id' => $request->role_id,
+            'role' => $request->role,
             'school_id' => $request->school_id,
         ];
 
@@ -86,13 +86,13 @@ class UserController extends BaseController
 
     public function ListTeacher()
     {
-        $user = User::select('name', 'email')->where('role_id', 2)->get();
+        $user = User::select('name', 'email')->where('role', 'teacher')->get();
         return $this->responseOk($user);
     }
 
      public function ListStudent()
     {
-        $user = User::select('name', 'email')->where('role_id', 3)->get();
+        $user = User::select('name', 'email')->where('role', 'student')->get();
         return $this->responseOk($user);
     }
 }
