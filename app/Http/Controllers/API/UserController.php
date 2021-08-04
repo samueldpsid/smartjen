@@ -41,8 +41,8 @@ class UserController extends BaseController
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
-            'role_id' => ['required', 'integer'],
-            'school_id' => ['required', 'integer'],
+            'role_id' => ['required', 'numeric'],
+            'school_id' => ['required', 'numeric'],
         ]);
 
         if ($validator->fails()) {
@@ -71,15 +71,28 @@ class UserController extends BaseController
         }
     }
 
-    public function profile(Request $request)
-    {
-        return $this->responseOk($request->user());
-    }
-
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
 
         return $this->responseOk(null, 200, 'Logged out successfully.');
+    }
+
+    public function ListUser()
+    {
+        $user = User::all();
+        return $this->responseOk($user);
+    }
+
+    public function ListTeacher()
+    {
+        $user = User::select('name', 'email')->where('role_id', 2)->get();
+        return $this->responseOk($user);
+    }
+
+     public function ListStudent()
+    {
+        $user = User::select('name', 'email')->where('role_id', 3)->get();
+        return $this->responseOk($user);
     }
 }

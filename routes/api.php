@@ -17,7 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::post('signup', 'API\UserController@signup');
 Route::post('login', 'API\UserController@login');
 
-Route::middleware('auth:api')->group(function () {
-    Route::get('profile', 'API\UserController@profile');
-    Route::get('logout', 'API\UserController@logout');
-});
+Route::get('logout', 'API\UserController@logout');
+Route::get('list-user', 'API\UserController@listuser');
+Route::get('list-teacher', 'API\UserController@listteacher');
+Route::get('list-student', 'API\UserController@liststudent');
+
+// Route::middleware('auth:api')->group(function () {
+//     Route::get('index', 'API\UserController@index');
+//     Route::get('logout', 'API\UserController@logout');
+//     Route::get('list-user', 'API\UserController@listuser');
+// 	Route::get('list-teacher', 'API\UserController@listteacher');
+// 	Route::get('list-student', 'API\UserController@liststudent');
+// });
